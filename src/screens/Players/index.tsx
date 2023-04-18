@@ -13,7 +13,7 @@ import { Button } from "@components/Button";
 
 export function Players() {
   const [team, setTeam] = useState("Time A");
-  const [players, setPlayers] = useState(["Wagner", "Otílio"]);
+  const [players, setPlayers] = useState([]);
   return (
     <Container>
       <Header showBackButton />
@@ -40,7 +40,6 @@ export function Players() {
           )}
           horizontal
         />
-
         <NumberOfPlayers>{players.length}</NumberOfPlayers>
       </HeaderList>
 
