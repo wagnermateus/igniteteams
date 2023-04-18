@@ -6,6 +6,7 @@ import { useFonts } from "expo-font";
 import { Loading } from "@components/Loading";
 import { StatusBar } from "react-native";
 import { NewGroup } from "@screens/NewGroup";
+import { Players } from "@screens/Players";
 
 export default function App() {
   const [fonstsLoaded] = useFonts({ Roboto_400Regular, Roboto_700Bold });
@@ -17,7 +18,7 @@ export default function App() {
         backgroundColor="transparent"
         translucent
       />
-      {fonstsLoaded ? <NewGroup /> : <Loading />}
+      {fonstsLoaded ? <Players /> : <Loading />}
     </ThemeProvider>
   );
 }
