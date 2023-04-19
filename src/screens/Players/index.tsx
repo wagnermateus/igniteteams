@@ -5,8 +5,8 @@ import { Container, Form, HeaderList, NumberOfPlayers } from "./styles";
 import { ButtonIcon } from "@components/ButtonIcon";
 import { Input } from "@components/Input";
 import { Filter } from "@components/Filter";
-import { useEffect, useState } from "react";
-import { Alert, FlatList } from "react-native";
+import { useEffect, useRef, useState } from "react";
+import { Alert, FlatList, TextInput } from "react-native";
 import { PlayerCard } from "@components/PlayerCard";
 import { EmptyList } from "@components/EmptyList";
 import { Button } from "@components/Button";
@@ -30,6 +30,8 @@ export function Players() {
 
   const { group } = route.params as RouteParams;
 
+  const newPlayerNameInputRef = useRef<TextInput>(null);
+
   async function handleAddPlayer() {
     if (newPlayerName.trim().length === 0) {
       return Alert.alert(
@@ -45,6 +47,11 @@ export function Players() {
 
     try {
       await playerAddByGroup(newPlayer, group);
+
+      newPlayerNameInputRef.current?.blur();
+
+      setNewPlayerName("");
+
       await fetchPlayersByTeam();
     } catch (error) {
       if (error instanceof AppError) {
@@ -80,9 +87,13 @@ export function Players() {
       <Highlight title={group} subtitle="Adicione a galera e separe os times" />
       <Form>
         <Input
+          inputRef={newPlayerNameInputRef}
           placeholder="Nome da pessoa"
           autoCorrect={false}
           onChangeText={setNewPlayerName}
+          value={newPlayerName}
+          onSubmitEditing={handleAddPlayer}
+          returnKeyType="done"
         />
 
         <ButtonIcon icon="add" onPress={handleAddPlayer} />
